@@ -1,20 +1,20 @@
 const CONFIG = {
     // Pengaturan Foto
     images: [
-        "foto 4.jpg",
-        "foto 14.jpg",
+        "Foto 4.jpg",
+        "Foto 14.jpg",
         "foto 6.jpg"
     ],
 
     imagesMain: [
-        "foto 10.jpg",
-        "foto 11.jpg",
-        "foto 13.jpg"
+        "Foto 10.jpg",
+        "Foto 11.jpg",
+        "Foto 13.jpg"
     ],
 
-    bgLuarUrl: "foto 4.jpg",
+    bgLuarUrl: "Foto 4.jpg",
 
-    countdownBgUrl: "foto 19.jpg",
+    countdownBgUrl: "Foto 19.jpg",
 
     // Pengaturan Warna
     colors: {
