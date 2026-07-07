@@ -3,7 +3,7 @@ const CONFIG = {
     images: [
         "Foto 4.jpg",
         "Foto 14.jpg",
-        "foto 6.jpg"
+        "Foto 6.jpg"
     ],
 
     imagesMain: [
