@@ -1,0 +1,1287 @@
+@font-face {
+    font-family: 'Brother Signature'; /* Nama yang akan dipanggil di CSS */
+    src: url('Brother Signature.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Scaver'; /* Nama yang akan dipanggil di CSS */
+    src: url('Scaver.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Reset Dasar */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 1. Background Luar */
+html {
+    background: no-repeat center center fixed;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* Mencegah geser kanan-kiri */
+}
+
+/* 2. Logika Body */
+body {
+    box-shadow: -10px 0 50px rgba(0,0,0,0.5);
+    position: relative;
+    min-height: 100vh;
+    margin: 0; /* Reset margin default */
+    padding: 0;
+}
+
+/* 3. SETTING KHUSUS LAYAR LEBAR (LAPTOP/TABLET) */
+@media (min-width: 501px) {
+    body {
+    max-width: 500px !important;
+    margin-left: auto !important; 
+    margin-right: 0 !important;
+    display: block !important;
+   }
+}
+
+/* 4. SETTING KHUSUS HP (Full Layar) */
+@media (max-width: 500px) {
+    body {
+    max-width: 100% !important; /* Paksa 100% di HP */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-shadow: none; /* Hilangkan bayangan di HP agar lebih ringan */
+   }
+}
+
+/* Animasi*/
+.hidden-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    /* Gunakan durasi lebih panjang (1.5s) agar terlihat elegan */
+    transition: opacity 1.5s ease-out, transform 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Class ini ditambahkan oleh JS saat elemen terlihat */
+.animate-show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.visible {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+.slide-in-left, .slide-in-right {
+    opacity: 0;
+    transition: all 1.5s ease-out; /* Durasi 1 detik */
+}
+
+/* Posisi Awal */
+.slide-in-left { transform: translateX(-100px); } /* Muncul dari kiri */
+.slide-in-right { transform: translateX(100px); } /* Muncul dari kanan */
+
+/* Kelas saat elemen sudah muncul (diberikan oleh JS) */
+.slide-in-left.visible, .slide-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+/* Bagian Sampul */
+.cover-section {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 9999;
+    transition: transform 1.5s cubic-bezier(0.65, 0.05, 0.36, 1);
+}
+
+.cover-up {
+    transform: translateY(-100%); /* Geser ke atas keluar layar */
+}
+
+/* Kontainer Slideshow Background */
+.slideshow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+}
+
+.slide.active {
+    opacity: 1;
+}
+
+/* Overlay Transparan Hitam */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Ubah angka 0.5 untuk mengatur kegelapan */
+    z-index: -1;
+}
+
+/* Tipografi Konten */
+.cover-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   /* Mengatur posisi vertikal tetap di tengah */
+    align-items: flex-start;  /* INI YANG MENGGESER KE KIRI */
+    text-align: left;         /* Membuat teks rata kiri */
+    position: relative;
+    z-index: 2;
+    padding-top: 160px;
+    padding-left: 5px;       /* Semakin besar angka ini, semakin ke kanan posisi teksnya */
+    padding-right: 95px;
+    height: 100vh;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    line-height: 0;
+    margin: 20px 0;
+    text-transform: uppercase;
+    font-family: var(--font-body);
+    color: var(--secondary);
+}
+
+.title {
+    font-size: 3rem;
+    font-family: var(--font-heading);
+    color: var(--secondary);
+    line-height: 1.2;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column; /* Membuat Fadil di atas */
+    align-items: left;    /* Menjaga semua di tengah */
+}
+
+.row-bride {
+    display: flex;          
+    align-items: center;    
+    gap: 10px;              
+}
+
+.ampersand {
+    font-size: 2rem;
+    color: var(--secondary);
+}
+
+#groom-name {
+    display: block;         /* Memastikan Fadil mengambil baris sendiri */
+}
+
+.invite {
+    font-size: 0.5rem;
+    letter-spacing: 2px;
+    margin-bottom: 0px;
+    font-family: var(--font-body);
+    color: var(--secondary);
+}
+
+.note {
+    font-size: 0.5rem;
+    margin-top: 20px;
+    font-family: var(--font-body);
+    color: var(--secondary);
+}
+
+.title span {
+    font-size: 2.5rem;
+    font-weight: normal;
+}
+
+.date {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    font-family: var(--font-body);
+}
+
+.envelope-icon {
+    width: 24px;   /* Ukuran ikon */
+    height: 24px;  /* Ukuran ikon */
+    stroke: currentColor; /* Mengikuti warna teks tombol */
+    vertical-align: middle;
+    margin-right: 8px; /* Jarak antara ikon dan teks tombol */
+}
+
+/* Tombol Buka Undangan */
+.btn-open-invitation {
+   padding: 10px 12px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    background-color: var(--bgbutton);
+    color: var(--secondary);
+    transition: transform 0.2s, background-color 0.3s;
+    font-family: var(--font-body);
+}
+
+.btn-open-invitation:hover {
+    background-color: var(--secondary);
+    color: var(--primary); /* Agar tulisan terlihat kontras saat background jadi putih */
+    transform: scale(1.05); /* Sedikit membesarkan tombol saat di-hover */
+    font-family: var(--font-body);
+}
+
+.guest-name {
+    font-size: 1.5rem;
+    margin: 15px 0 30px 0;
+    font-family: var(--font-body);
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 2px;
+    color: var(--secondary);
+}
+
+/* Posisi pojok kanan bawah */
+.music-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.music-container:active { transform: scale(0.95); }
+
+/* Piringan */
+.music-vinyl {
+    width: 100%;
+    height: 100%;
+    background-color: #0a0a0a;
+    border-radius: 50%;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #000;
+}
+
+/* Animasi Putar */
+.music-vinyl.playing { 
+    animation: spin 3s linear infinite; 
+}
+
+@keyframes spin { 
+    from { transform: rotate(0deg); } to 
+    { transform: rotate(360deg); } 
+}
+
+.vinyl-texture {
+    position: absolute; 
+    inset: 0; 
+    border-radius: 50%; 
+    opacity: 0.4;
+    background: repeating-radial-gradient(circle, #222, #222 0.5px, #000 1.5px);
+}
+
+.vinyl-gloss {
+    position: absolute; 
+    inset: 0; 
+    border-radius: 50%; 
+    opacity: 0.6;
+    background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3) 10%, transparent 20%, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%, transparent 80%, rgba(255,255,255,0.3) 90%, transparent);
+}
+
+.vinyl-logo { 
+    z-index: 10; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+}
+
+.logo-img { 
+    width: 28px; 
+    height: 28px; 
+    object-fit: contain; 
+    filter: brightness(0) invert(1); 
+    opacity: 0.8; 
+}
+
+.logo-text { 
+    display: none; 
+    font-size: 8px;
+    font-weight: bold; 
+    color: white;
+    opacity: 0.7; 
+}
+
+.vinyl-center-hole { 
+    position: absolute; 
+    width: 4px; 
+    height: 4px; 
+    background: black; 
+    border: 1px solid rgba(255,255,255,0.1); 
+    border-radius: 50%; 
+    z-index: 20; 
+}
+
+.main-content {
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    /* Gunakan display: block agar teks tidak melompat */
+    display: block; 
+    /* Gunakan visibility agar ruang terhitung sejak awal */
+    visibility: hidden;
+    transition: opacity 1s ease-in-out, visibility 1s;
+}
+
+.main-content.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.overlay-main { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    /* Ubah angka 0.4 menjadi lebih besar (misal 0.6) untuk membuat foto tampak lebih redup/gelap */
+    background: rgba(0, 0, 0, 0.4); 
+    z-index: 1; 
+}
+
+.slideshow-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.main-slide {
+    position: absolute; /* Wajib absolute agar gambar saling menumpuk */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    
+    opacity: 0; /* Semua gambar disembunyikan awalnya */
+    transition: opacity 1.5s ease-in-out; /* Animasi pudar 1.5 detik */
+}
+
+/* Gambar yang sedang mendapat giliran akan dimunculkan oleh JavaScript */
+.main-slide.active {
+    opacity: 1; 
+}
+
+.main-content-text {
+    display: flex;
+    flex-direction: column; /* Mengatur semua elemen ke bawah */
+    align-items: center;    /* Menjaga posisi di tengah secara horizontal */
+    justify-content: flex-end;
+    position: relative;
+    z-index: 5;
+    height: 100vh;
+    color: white;
+    padding-bottom: 140px
+}
+
+.section-title {
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1px;
+    letter-spacing: 2px
+}
+
+.names-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px 0;
+    margin-bottom: 10px; /* Jarak nama ke garis */
+}
+
+.names-main { 
+    font-family: var(--font-heading); 
+    font-size: 4rem; 
+    line-height: 1; /* Agar nama tidak terlalu renggang */
+}
+
+/* Garis tipis horizontal */
+.line-divider {
+    width: 110%;          /* Panjang garis */
+    height: 1px;         /* Ketebalan garis */
+    background-color: rgba(255, 255, 255, 0.5); /* Putih transparan */
+    margin-top: 15px;    /* Jarak antara nama dan garis */
+}
+
+.date-main {
+    margin-top: 15px;
+    font-family: var(--font-body);
+    margin-top: 10px;    /* Jarak garis ke tanggal */
+    letter-spacing: 2px;
+    font-weight: normal;
+}
+
+.scroll-arrows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+    position: relative;
+}
+
+.arrow {
+    width: 20px;
+    height: 10px; /* Tinggi disesuaikan untuk bentuk V */
+    position: absolute;
+    opacity: 100;
+    animation: moveDown 2s infinite;
+}
+
+/* Membuat bentuk V */
+.arrow::before, .arrow::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 11px;
+    background-color: rgba(255, 255, 255, 0.8);
+    top: 0;
+}
+
+.arrow::before {
+    left: 0;
+    transform: rotate(-40deg); /* Sisi kiri V */
+}
+
+.arrow::after {
+    left: 7px;
+    transform: rotate(40deg); /* Sisi kanan V */
+}
+
+/* Mengatur agar panah kedua muncul setelah panah pertama mulai bergerak */
+.arrow:nth-child(1) { animation-delay: 0.3s; }
+.arrow:nth-child(2) { animation-delay: 0.8s; }
+
+@keyframes moveDown {
+    0% { 
+        opacity: 0; 
+        transform: translateY(-10px); /* Mulai dari atas */
+    }
+    50% { 
+        opacity: 1; 
+    }
+    100% { 
+        opacity: 0; 
+        transform: translateY(12px);  /* Berakhir di bawah */
+    }
+}
+
+.bottom-gradient-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%; /* Tinggi area gradasi */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 2; /* Pastikan di atas slideshow tapi di bawah tulisan */
+    pointer-events: none; /* Agar tidak mengganggu klik */
+}
+
+/* --- SECTION QUOTE --- */
+.quote-section {
+    background-color: #000000; /* Latar belakang hitam pekat */
+    color: #ffffff; /* Mengubah warna dasar teks menjadi putih */
+    padding: 5px;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* Inisial */
+.quote-initials {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px; /* Mengatur jarak antara huruf dan garis tengah */
+    margin-bottom: 50px;
+}
+
+#initial-groom, #initial-bride {
+    /* Menggunakan font serif klasik agar elegan seperti di foto referensi */
+    font-family: "Times New Roman", Times, serif; 
+    font-size: 6rem; /* Ukuran huruf sangat besar */
+    font-weight: normal;
+    color: var(--secondary);
+    line-height: 1;
+}
+
+/* Animasi Huruf F (dari kiri) */
+@keyframes slideInLeft {
+    0% { opacity: 0; transform: translateX(-100px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Animasi Huruf A (dari kanan) */
+@keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(100px); }
+    100% { opacity: 1; transform: translateX(0); }
+}
+
+/* Terapkan animasi saat class 'animate-show' aktif */
+.animate-show #initial-groom {
+    animation: slideInLeft 1s ease-out forwards;
+}
+
+.animate-show #initial-bride {
+    animation: slideInRight 1s ease-out forwards;
+}
+
+/* Pastikan huruf tersembunyi sebelum animasi dimulai */
+#initial-groom, #initial-bride {
+    opacity: 0;
+}
+
+.quote-initials .divider {
+    width: 2px; /* Ketebalan garis */
+    height: 120px; /* Tinggi garis (lebih tinggi dari huruf) */
+    background-color: rgba(255, 255, 255, 0.6); /* Warna garis putih transparan */
+    margin: 0;
+}
+
+/* Slider Kotak Kecil */
+.slider-container {
+    width: 100%;
+    overflow: hidden;
+    margin-bottom: 50px;
+    position: relative;
+}
+.slider-track {
+    display: flex;
+    gap: 15px;
+    width: max-content;
+    /* Animasi infinite scroll ke kiri */
+    animation: slideLeft 20s linear infinite; 
+}
+.slider-box {
+    width: 130px;
+    height: 130px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+@keyframes slideLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } 
+}
+
+/* Teks Ayat Suci */
+.quote-text-wrapper {
+    padding: 0 30px;
+    margin-bottom: 50px;
+}
+.arabic-text {
+    font-size: 2.2rem;
+    font-weight: normal;
+    margin-bottom: 25px;
+    color: var(--secondary);
+}
+.quote-content {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    line-height: 1.6;
+    color: var(--secondary);
+    margin-bottom: 15px;
+}
+.quote-source {
+    font-weight: bold;
+    font-size: 1rem;
+    color: var(--secondary);
+}
+
+.couple-section {
+    padding: 5px 5px 20px 5px;
+    background-color: #000; /* Hitam sesuai permintaan */
+    color: #fff;
+}
+
+.box-putih {
+    background-color: #ffff;
+    border-radius: 20px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #333;
+    flex-wrap: nowrap; /* Mencegah teks membungkus ke baris baru */
+    overflow: hidden; /* Penting: agar konten yang full tidak keluar dari border-radius */
+}
+
+.side-label {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg); /* Memutar tulisan agar arahnya ke bawah */
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    color: var(--primary);
+    letter-spacing: 2px;
+}
+
+/* Susunan profil atas-bawah */
+.container-mempelai {
+    display: flex;
+    flex-direction: column; /* Menyusun atas-bawah */
+    align-items: center;
+    width: 100%;
+}
+
+.profile-wrapper {
+    display: flex;
+    align-items: center;    /* Menjajarkan keduanya secara vertikal ke tengah */
+    gap: 15px;              /* Jarak antara label dan kotak foto */
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+}
+
+/* Container pembungkus foto */
+.profile-img-box {
+    position: relative; /* Wajib agar info-overlay bisa 'menempel' di sini */
+    width: 100%;             /* Mengikuti lebar container parent */
+    max-width: 100%;        /* Batas maksimal lebar foto (sesuaikan keinginan) */
+    height: 100%;           /* Tinggi tetap */
+    overflow: hidden;        /* KUNCI: Potong bagian foto yang meluap */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Memastikan gambar selalu pas di dalam box */
+.profile-img-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       /* Foto mengisi ruang tanpa distorsi */
+    display: block;
+}
+
+/* Menambahkan Frame Garis di atas foto */
+.profile-img-box::before {
+    content: "";
+    position: absolute;
+    top: 5px;    /* Jarak frame dari tepi atas */
+    left: 5px;   /* Jarak frame dari tepi kiri */
+    right: 5px;  /* Jarak frame dari tepi kanan */
+    bottom: 5px; /* Jarak frame dari tepi bawah */
+    border: 1px solid #c79369; /* Warna dan ketebalan garis frame */
+    border-radius: 20px; /* Lengkung harus menyesuaikan agar simetris */
+    pointer-events: none; /* Agar tidak mengganggu klik ke tombol di bawah */
+    z-index: 3; /* Memastikan frame berada di atas foto tapi di bawah info-overlay */
+}
+
+/* Overlay Transparan di bawah foto */
+.info-overlay {
+    position: absolute;
+    bottom: 10px;
+    align-content: center;
+    width: 90%;
+    padding: 5px 5px;
+    border-radius: 20px; /* Lengkung di atas saja */
+    /* Background hitam transparan */
+    backdrop-filter: blur(2px);
+    background: rgb(74 74 74 / 60%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 2; /* Memastikan teks di atas foto */
+}
+
+.profile-name {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    margin-bottom: 2px;
+    letter-spacing: 1px;
+    text-align: center;
+    font-weight: 300;
+}
+
+.profile-parents {
+    font-size: 0.65rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.ig-btn {
+    background: rgb(0 0 0 / 40%); /* Tombol transparan */
+    border: none;
+    color: #fff;
+    border-radius: 30px;
+    padding: 5px 15px;
+    font-size: 0.7rem;
+    letter-spacing: 1px;
+    align-items: center;
+    align-content: center;
+}
+
+.detail-section {
+    padding: 5px 5px;
+    background-color: #ffffff; /* Hitam sesuai permintaan */
+    color: #fff;
+}
+
+/* Info Text */
+.detail-info {
+    padding: 40px 20px 40px 10px;
+}
+
+.detail-event-wedding {
+    text-align: right;
+    font-family: var(--font-body);
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 0.1;
+    font-weight: 500;
+}
+
+.detail-event {
+    text-align: right;
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 0.2;
+    font-weight: 100;
+}
+
+/* Garis tipis horizontal */
+.line-divider-event {
+    width: 57%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-top: 15px;
+    margin-left: 0;
+}
+
+.box-hitam {
+    background-color: #000;
+    border-radius: 10px;
+    margin: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #333;
+    flex-wrap: nowrap; /* Mencegah teks membungkus ke baris baru */
+    overflow: hidden; /* Penting: agar konten yang full tidak keluar dari border-radius */
+}
+
+.side-label-left {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg); /* Memutar tulisan agar arahnya ke bawah */
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    color: #ffff;
+    letter-spacing: 2px;
+}
+
+/* Kartu Putih dengan Border Radius */
+.profile-card-custom {
+    display: flex;
+    flex-direction: column; /* Menyusun atas-bawah */
+    align-items: center;
+    width: 100%;
+    height: 560px;
+}
+
+/* Bingkai Foto Arch */
+.profile-img-container {
+    position: relative; /* Wajib: menjadi acuan overlay */
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    display: flex;
+}
+
+/* Slider wrapper harus cukup lebar untuk menampung semua foto */
+.slider-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
+}
+
+/* Setiap gambar harus mengambil 100% dari lebar container */
+.slider-wrapper img {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Foto tetap memenuhi area tanpa mengubah rasio */
+    flex-shrink: 0;    /* Mencegah foto menciut */
+}
+
+/* Pastikan overlay di atas foto */
+.info-overlay-event {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    width: 90%;
+    padding: 5px 5px;
+    border-radius: 20px; /* Lengkung di atas saja */
+    backdrop-filter: blur(2px);
+    background: rgb(74 74 74 / 60%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    z-index: 2; /* Memastikan teks di atas foto */
+}
+
+.event-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.event-date-left .counter-date {
+    font-size: 5rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: left;
+    font-family: var(--font-body);
+}
+
+.event-date-right {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.event-day { font-size: 1.2rem; font-weight: bold; }
+.event-month { font-size: 1rem; }
+.event-year { font-size: 1rem; }
+
+
+.event-details-wrapper {
+    width: 90%;          /* Sesuaikan lebar agar tidak terlalu mepet */
+    text-align: left;    /* KUNCI: Membuat teks rata kiri */
+}
+
+.event-time, .event-location {
+    font-size: 0.8rem;
+    color: #fff;
+    line-height: 2;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.event-address {
+    font-size: 0.8rem;
+    color: #fff;
+    line-height: 2;;
+    font-family: var(--font-body);
+    letter-spacing: 1px;
+}
+
+/* Opsional: Tambahkan icon agar lebih menarik */
+.event-time::before {
+    content: "🕒";
+}
+.event-location::before {
+    content: "🏠";
+}
+.event-address::before {
+    content: "📍";
+}
+
+/* Tombol Google Maps */
+.maps-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 94%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px 0px;
+    background-color: var(--bgbutton);
+    color: white;
+    text-decoration: none;
+    border-radius: 100px;
+    font-size: 0.9rem;
+    font-family: var(--font-body);
+    transition: transform 0.3s ease;
+    letter-spacing: 1px;
+}
+
+.maps-btn i {
+    font-size: 1.1rem; /* Ukuran ikon */
+}
+
+.maps-btn:hover {
+    transform: scale(1.05);
+}
+
+.box-hitam-right {
+    background-color: #000;
+    border-radius: 10px;
+    margin: 20px 5px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    color: #333;
+    flex-wrap: nowrap; /* Mencegah teks membungkus ke baris baru */
+    overflow: hidden; /* Penting: agar konten yang full tidak keluar dari border-radius */
+}
+
+.side-label-right {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg); /* Memutar tulisan agar arahnya ke bawah */
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    color: #ffff;
+    letter-spacing: 2px;
+}
+
+.profile-card-custom-resepsi {
+    display: flex;
+    flex-direction: column; /* Menyusun atas-bawah */
+    align-items: center;
+    width: 100%;
+    height: 560px;
+}
+
+/* Bingkai Foto Arch */
+.profile-img-container-resepsi {
+    position: relative; /* Wajib: menjadi acuan overlay */
+    width: 100%;
+    height: 100%;
+    overflow: hidden; 
+    display: flex;
+}
+
+
+/* Slider wrapper harus cukup lebar untuk menampung semua foto */
+.slider-wrapper-resepsi {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
+}
+
+/* Setiap gambar harus mengambil 100% dari lebar container */
+.slider-wrapper-resepsi img {
+    min-width: 100%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Foto tetap memenuhi area tanpa mengubah rasio */
+    flex-shrink: 0;    /* Mencegah foto menciut */
+}
+
+.event-day-resepsi { 
+    font-size: 1.2rem; 
+    font-weight: bold; 
+}
+
+.event-month-resepsi { 
+    font-size: 1rem; 
+}
+
+.event-year-resepsi { 
+    font-size: 1rem; 
+}
+
+.event-details-wrapper-resepsi {
+    width: 90%;          /* Sesuaikan lebar agar tidak terlalu mepet */
+    text-align: left;    /* KUNCI: Membuat teks rata kiri */
+}
+
+.event-time-resepsi, .event-location-resepsi {
+    font-size: 0.8rem;
+    color: #fff;
+    line-height: 2;
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.event-address-resepsi {
+    font-size: 0.8rem;
+    color: #fff;
+    line-height: 2;;
+    font-family: var(--font-body);
+    letter-spacing: 1px;
+}
+
+/* Opsional: Tambahkan icon agar lebih menarik */
+.event-time-resepsi::before {
+    content: "🕒";
+}
+.event-location-resepsi::before {
+    content: "🏠";
+}
+.event-address-resepsi::before {
+    content: "📍";
+}
+
+/* Pengaturan Utama Section */
+.countdown-section {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    display: flex; /* Untuk pusatkan konten di dalamnya */
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+}
+
+
+/* Gambar Background yang menentukan tinggi */
+.countdown-bg-img {
+    width: 100%;
+    height: auto; /* Kunci agar proporsi tidak berubah / tidak gepeng */
+    display: block;
+}
+
+/* Overlay & Konten Teks */
+.countdown-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0); /* Efek gelap overlay di atas foto */
+    z-index: 2;
+}
+
+.countdown-container {
+    text-align: center;
+    display: contents;
+    color: #fff;
+    width: 100%;
+    padding: 20px;
+}
+
+.countdown { 
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(3px);
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    padding: 2rem;
+    width: 90%;
+    color: white;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    align-items: center;
+}
+
+.time-box-container{
+    display: flex;
+    background: transparent;
+    flex-wrap: nowrap;
+    align-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.time-box { 
+    background: transparent;
+    color: white;
+    padding: 12px;
+    border-radius: 8px;
+    min-width: 80px;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+}
+
+.time-box span { 
+    display: block; 
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.save-date-btn {
+    display: inline-flex;             /* inline-flex */
+    flex-wrap: wrap;
+    width: 80%;
+    justify-content: center;
+    align-items: center;              /* items-center */
+    gap: 8px;                         /* gap-2 */
+    padding: 10px 24px;               /* px-6 py-2.5 */
+    border-radius: 9999px;            /* rounded-full */
+    background-color: rgba(255, 255, 255, 0.2); /* bg-white/20 */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* border border-white/40 */
+    color: #ffffff;                   /* text-white */
+    font-size: 15px;                  /* text-xs */
+    font-family: var(--font-body) ;
+    font-weight: 600;                 /* font-semibold */
+    letter-spacing: 0.1em;           /* tracking-wider */
+    backdrop-filter: blur(10px);       /* backdrop-blur-sm */
+    transition: all 0.3s ease;        /* transition-all */
+    cursor: pointer;
+    text-decoration: none;
+    transition: transform 0.3s ease; /* Efek transisi halus */
+}
+
+.calendar-icon {
+    width: 20px; /* Memperbesar lebar ikon */
+    height: 20px; /* Memperbesar tinggi ikon */
+    
+}
+
+/* (Opsional) Membuat ikon sedikit membesar saat tombol disentuh/dihover */
+.save-date-btn:hover  {
+    background-color: rgba(255, 255, 255, 0.4); /* hover:bg-white/40 */
+    transform: scale(1.2); 
+}
+
+/* ===============================
+   WEDDING GIFT SECTION
+   =============================== */
+.gift-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: black; /* Warna latar sangat terang agar kontras dengan section lain */
+}
+
+.gift-title {
+    font-family: var(--font-heading);
+    font-size: 3rem;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.gift-desc {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--secondary);
+    margin-bottom: 30px;
+    padding: 0 15px;
+}
+
+.bank-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.bank-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    padding: 25px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.bank-card:hover {
+    transform: translateY(-5px); /* Efek melayang saat disentuh */
+}
+
+.bank-name {
+    font-weight: bold;
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.bank-account {
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 2px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.bank-recipient {
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 20px;
+}
+
+/* Tombol Salin */
+.copy-btn {
+    background-color: var(--bgbutton);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.copy-btn:hover {
+    opacity: 0.8;
+}
