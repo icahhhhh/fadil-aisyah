@@ -38,6 +38,12 @@ body {
     overflow-x: hidden;
 }
 
+.main-wrapper {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative; /* Penting agar elemen absolute di dalamnya tidak bocor */
+}
+
 /* 3. SETTING KHUSUS LAYAR LEBAR (LAPTOP/TABLET) */
 @media (min-width: 501px) {
     body {
